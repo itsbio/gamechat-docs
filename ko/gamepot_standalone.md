@@ -13,7 +13,7 @@ search:
 
 **_[[VUPLEX Site Link]](https://developer.vuplex.com/webview/overview)_**
 
-**_[[VUPLEX AssetStore Link]](hhttps://assetstore.unity.com/packages/tools/gui/3d-webview-for-windows-and-macos-154144)_**
+**_[[VUPLEX AssetStore Link]](https://assetstore.unity.com/packages/tools/gui/3d-webview-for-windows-and-macos-154144)_**
 
 ## 1. 초기화
 
