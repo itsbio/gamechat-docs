@@ -4,4 +4,5 @@
 
 ## 한국어
 
-- [Unity SDK](ko/gamechat_unity.md)
+- [GameChat Unity SDK](ko/gamechat_unity.md)
+- [GamePot Unity SDK - for Windows](ko/gamepot_standalone.md)
