@@ -11,9 +11,9 @@ search:
 
 **_GamePot Unity SDK v2.1.2를 기준으로 튜닝된 패키지 입니다._**
 
-**_[[VUPLEX Site Link]](https://developer.vuplex.com/webview/overview)_**
+[[ VUPLEX Site Link ]](https://developer.vuplex.com/webview/overview)
 
-**_[[VUPLEX AssetStore Link]](https://assetstore.unity.com/packages/tools/gui/3d-webview-for-windows-and-macos-154144)_**
+[[ VUPLEX AssetStore Link ]](https://assetstore.unity.com/packages/tools/gui/3d-webview-for-windows-and-macos-154144)
 
 ## 1. 초기화
 
