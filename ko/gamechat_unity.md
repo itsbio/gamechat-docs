@@ -18,15 +18,16 @@ GameChat.initialize(PROJECT_ID);
 | ID         | type   | desc            |
 | :--------- | :----- | :-------------- |
 | PROJECT_ID | string | 프로젝트 아이디 |
+
 |
 
 ### 2. Connect to GameChat Server
 
--  유저아이디를 통해, 게임챗 소켓 서버에 접속합니다.
+- 유저아이디를 통해, 게임챗 소켓 서버에 접속합니다.
 
--  api를 사용하기 위한 토큰값을 획득합니다.
-   
-    (connect 성공 이후,) CoreManager.token에서 토큰값 확인 가능
+- api를 사용하기 위한 토큰값을 획득합니다.
+
+  (connect 성공 이후,) CoreManager.token에서 토큰값 확인 가능
 
 ```csharp
 GameChat.connect(USER_ID, (string err, string user_id)=> {
@@ -42,6 +43,7 @@ GameChat.connect(USER_ID, (string err, string user_id)=> {
 | ID      | type   | desc        |
 | :------ | :----- | :---------- |
 | USER_ID | string | 유저 아이디 |
+
 |
 
 ### 3. Disconnect from GameChat Server
@@ -57,19 +59,49 @@ GameChat.disconnect();
 유저정보를 업데이트 합니다.
 
 ```csharp
-CoreManager.User
+GameChatSetting GameChat.setting;
+
+GameChatSetting
 {
-    public string id;
-    public string name;
-    public string profile;     //image profile url
+   public string Adid = "";
+   public string MemberId = "";
+   public string NickName = "";
+   public string ProfileUrl = ""; //image profile url
+   public string Token = "";
 }
 ```
 
-| ID      | type   | desc              |
-| :------ | :----- | :---------------- |
-| id      | string | 유저 아이디       |
-| name    | string | 유저 닉네임       |
-| profile | string | 프로필 이미지 url |
+| ID         | type   | desc                          |
+| :--------- | :----- | :---------------------------- |
+| Adid       | string | 광고아이디(Unique identifier) |
+| MemberId   | string | 유저 아이디                   |
+| NickName   | string | 유저 닉네임                   |
+| ProfileUrl | string | 프로필 이미지 url             |
+| Token      | string | Authentification Token        |
+|
+
+```csharp
+GameChatDeviceInfo GameChat.deviceInfo;
+
+GameChatDeviceInfo
+{
+    public string AppVersion = "";
+    public string AppVersionCode = "";
+    public string DeviceModel = "";
+    public string DeviceModelVersion = "";
+    public string DeviceOSVersion = "";
+    public string NetworkType = "";
+}
+```
+
+| ID         | type   | desc                          |
+| :--------- | :----- | :---------------------------- |
+| AppVersion       | string |  |
+| AppVersionCode   | string |            |
+| DeviceModel   | string |                 |
+| DeviceModelVersion | string |           |
+| DeviceOSVersion      | string |        |
+| NetworkType      | string |       |
 |
 
 ## Communication
@@ -87,6 +119,7 @@ GameChat.unsubscribe(CHANNEL_ID);
 | ID         | type   | desc        |
 | :--------- | :----- | :---------- |
 | CHANNEL_ID | string | 채널 아이디 |
+
 |
 
 ### 2. SendMessage
@@ -97,10 +130,11 @@ GameChat.unsubscribe(CHANNEL_ID);
 GameChat.sendMessage(CHANNEL_ID, MESSAGE);
 ```
 
-| ID         | type   | desc        |
-| :--------- | :----- | :---------- |
-| CHANNEL_ID | string | 채널 아이디 |
+| ID         | type   | desc               |
+| :--------- | :----- | :----------------- |
+| CHANNEL_ID | string | 채널 아이디        |
 | MESSAGE    | string | 전송 메시지 텍스트 |
+
 |
 
 ## Event
@@ -118,23 +152,23 @@ GameChat.dispatcher.(EVENT_NAME) -= (CALLBACK_FUNCTION);
 ```csharp
 public delegate void onConnectedCallback(string data);
 public onConnectedCallback onConnected;
-//'connect' Event에 대한, callback 
+//'connect' Event에 대한, callback
 
 public delegate void onDisconnectedCallback(string reason);
 public onDisconnectedCallback onDisconnected;
-//'disconnect' Event에 대한, callback 
+//'disconnect' Event에 대한, callback
 
 public delegate void onMessageReceivedCallback(Message message);
 public onMessageReceivedCallback onMessageReceived;
-//'message' Event에 대한, callback 
+//'message' Event에 대한, callback
 
 public delegate void onEventReceivedCallback(string payload);
 public onEventReceivedCallback onEventReceived;
-//'event' Event에 대한, callback 
+//'event' Event에 대한, callback
 
 public delegate void onErrorReceivedCallback(string payload);
 public onErrorReceivedCallback onErrorReceived;
-//'error' Event에 대한, callback 
+//'error' Event에 대한, callback
 ```
 
 ## Client API
@@ -153,12 +187,13 @@ public class Subscription
 }
 ```
 
-| ID         | type   | desc        |
-| :--------- | :----- | :---------- |
-| id | string |  유니크 아이디|
-| channel_id | string |  채널 아이디|
-| user_id    | string | 유저 아이디 |
-| created_at | string | 생성 일자 |
+| ID         | type   | desc          |
+| :--------- | :----- | :------------ |
+| id         | string | 유니크 아이디 |
+| channel_id | string | 채널 아이디   |
+| user_id    | string | 유저 아이디   |
+| created_at | string | 생성 일자     |
+
 |
 
 ### 1-2. getSubscriptions
@@ -167,7 +202,7 @@ public class Subscription
 
 ```csharp
 GameChat.getSubscriptions(CHANNEL_ID, OFFSET, LIMIT, (List<Subscription> subscriptions) => {
-    
+
     foreach(Subscription elem in subscriptions)
     {
         //handling each subscription instance
@@ -185,20 +220,20 @@ public class Channel
     public string id;
     public string project_id;
     public string name;
-    public int join_count;
+    public int    join_count;
     public string created_at;
     public string updated_at;
 }
 ```
 
-| ID         | type   | desc        |
-| :--------- | :----- | :---------- |
-| id | string |  채널 아이디 (Base64 Encoded) |
-| project_id | string |  프로젝트 아이디|
-| name | string |  유저 닉네임|
-| join_count | int |  유저 수 |
-| created_at | string |  생성 일자 |
-| updated_at    | string |  갱신 일자 |
+| ID         | type   | desc                         |
+| :--------- | :----- | :--------------------------- |
+| id         | string | 채널 아이디 (Base64 Encoded) |
+| project_id | string | 프로젝트 아이디              |
+| name       | string | 채널 이름                  |
+| join_count | int    | 유저 수                      |
+| created_at | string | 생성 일자                    |
+| updated_at | string | 갱신 일자                    |
 |
 
 ### 2-2. getChannels
@@ -214,13 +249,64 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Subscription> subscription
 }));
 ```
 
-| ID         | type   | desc        |
-| :--------- | :----- | :---------- |
-| CHANNEL_ID | string |  채널 아이디 (Base64 Encoded)|
-| OFFSET | int |  (가져올) 채널의 시작 위치|
-| LIMIT | int |  (가져올) 채널의 수 |
+| ID         | type   | desc                         |
+| :--------- | :----- | :--------------------------- |
+| CHANNEL_ID | string | 채널 아이디 (Base64 Encoded) |
+| OFFSET     | int    | (가져올) 채널의 시작 위치 (index)    |
+| LIMIT      | int    | (가져올) 채널의 수           |
 |
 
+### 2-3. createChannel
+
+(프로젝트 내에) 새로운 Channel Instance를 생성할 수 있습니다.
+
+```csharp
+GameChat.createChannel(CHANNEL_NAME, (Channel channel) => {
+
+        //handling created channel instance
+
+}));
+```
+
+| ID         | type   | desc                         |
+| :--------- | :----- | :--------------------------- |
+| CHANNEL_NAME | string | (생성할) 채널 이름 |
+|
+
+### 2-4. updateChannel
+
+(프로젝트 내, 존재하는) Channel Instance의 이름을 갱신할 수 있습니다.
+
+```csharp
+GameChat.updateChannel(CHANNEL_ID, CHANNEL_NAME, (JSONNode result) => {
+
+        //updated channel response
+
+}));
+```
+
+| ID         | type   | desc                         |
+| :--------- | :----- | :--------------------------- |
+| CHANNEL_ID | string | 채널 아이디 |
+| CHANNEL_NAME | string | 채널 이름 |
+|
+
+### 2-5. deleteChannel
+
+(프로젝트 내, 존재하는) Channel Instance를 삭제할 수 있습니다.
+
+```csharp
+GameChat.deleteChannel(CHANNEL_ID, (JSONNode result) => {
+
+        //deleted channel response
+
+}));
+```
+
+| ID         | type   | desc                         |
+| :--------- | :----- | :--------------------------- |
+| CHANNEL_ID | string | 채널 아이디 |
+|
 
 ### 3-1. Message
 
@@ -235,7 +321,7 @@ public class Message
         public string lang;
         public string text;
     }
-    
+
     public class User
     {
         public string id;
@@ -256,23 +342,24 @@ public class Message
 }
 ```
 
-| ID   |      | type   | desc        |
-| :---------| :--------- | :----- | :---------- |
-| message_id || string |  메시지 유니크 아이디 |
-| channel_id | | string |  채널 아이디 |
-| sort_id  || string |   |
-| message_type || string | 메세지 타입|
-| | **content** | Content |    |
-| | type | string | 메세지 타입 |
-| | lang | string | 메세지 언어 |
-| | text | string | 메세지 텍스트 |
-| mentions  || string |  멘션(태그) |
-| mentions_everyone  || string | 전체 메세지 여부 |
-| | **sender** | User |    |
-| | id | string | (송신한) 유저 아이디 |
-| | name| string | (송신한) 유저 닉네임 |
-| | profile| string | (송신한) 유저 이미지 프로필 url |
-| created_at  || string |  메세지 생성 일자 |
+| ID                |             | type    | desc                            |
+| :---------------- | :---------- | :------ | :------------------------------ |
+| message_id        |             | string  | 메시지 유니크 아이디            |
+| channel_id        |             | string  | 채널 아이디                     |
+| sort_id           |             | string  |                                 |
+| message_type      |             | string  | 메세지 타입                     |
+|                   | **content** | Content |                                 |
+|                   | type        | string  | 메세지 타입                     |
+|                   | lang        | string  | 메세지 언어                     |
+|                   | text        | string  | 메세지 텍스트                   |
+| mentions          |             | string  | 멘션(태그)                      |
+| mentions_everyone |             | string  | 전체 메세지 여부                |
+|                   | **sender**  | User    |                                 |
+|                   | id          | string  | (송신한) 유저 아이디            |
+|                   | name        | string  | (송신한) 유저 닉네임            |
+|                   | profile     | string  | (송신한) 유저 이미지 프로필 url |
+| created_at        |             | string  | 메세지 생성 일자                |
+
 |
 
 ### 3-2. getMessages
@@ -288,13 +375,85 @@ GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, SORT_ID, (L
 }));
 ```
 
-| ID   |      | type   | desc        |
-| :---------| :--------- | :----- | :---------- |
-| CHANNEL_ID || string | 채널 아이디 |
-| OFFSET | | string | (가져올) 메세지의 시작 위치 |
-| LIMIT  || string | (가져올) 메세지의 갯수 |
-| SEARCH || string |  |
-| QUERY || string |  |
-| SORT || string |  |
-| SORT_ID || string |  |
+| ID         |     | type   | desc                        |
+| :--------- | :-- | :----- | :-------------------------- |
+| CHANNEL_ID |     | string | 채널 아이디                 |
+| OFFSET     |     | string | (가져올) 메세지의 시작 위치 |
+| LIMIT      |     | string | (가져올) 메세지의 갯수      |
+| SEARCH     |     | string |                             |
+| QUERY      |     | string |                             |
+| SORT       |     | string |                             |
+| SORT_ID    |     | string |                             |
+|
+
+
+### 4-1. Member
+
+(Received) Member Data Class (per Unit)
+
+```csharp
+public class Member
+{
+    public string id = "";
+    public string project_id = "";
+    public string machine_id = "";
+    public string nickname = "";
+    public string profile_url = "";
+    public string memo = "";
+    public string country = "";
+    public string remoteip = "";
+    public string adid = "";
+    public string device = "";
+    public string network = "";
+    public string version = "";
+    public string model = "";
+    public string logined_at = "";
+    public string created_at = "";
+    public string updated_at = "";
+}
+```
+
+| ID                          | type    | desc                            |
+| :----------------  | :------ | :------------------------------ |
+| id                            | string  |             |
+| project_id              | string  |                      |
+| machine_id            | string  |                                 |
+| nickname             | string  |                     |
+| profile_url             | string  |                     |
+| memo             | string  |                     |
+| country             | string  |                     |
+| remoteip             | string  |                     |
+| adid             | string  |                     |
+| device             | string  |                     |
+| network             | string  |                     |
+| version             | string  |                     |
+| model             | string  |                     |
+| logined_at             | string  |                     |
+| created_at             | string  |                     |
+| updated_at             | string  |                     |
+|
+
+### 4-2. updateMember
+
+유저 정보를 갱신할 수 있습니다.
+
+```csharp
+GameChat.updateMember(MEMBER_ID, NICKNAME, PROFILE, MEMO, ADID, DEVICE, NETWORK, VERSION, MODEL, (Member member) => {
+
+        //handling updated instance
+  
+}));
+```
+
+| ID         |     | type   | desc                        |
+| :--------- | :-- | :----- | :-------------------------- |
+| MEMBER_ID |     | string | 멤버 아이디                 |
+| NICKNAME     |     | string | 닉네임 |
+| PROFILE      |     | string | 프로필 이미지 url      |
+| MEMO     |     | string |                             |
+| ADID      |     | string |                             |
+| DEVICE       |     | string |                             |
+| NETWORK    |     | string |                             |
+| VERSION    |     | string |                             |
+| MODEL    |     | string |                             |
 |
