@@ -27,7 +27,7 @@ GameChat.initialize(PROJECT_ID);
 
 - api를 사용하기 위한 토큰값을 획득합니다.
 
-  (connect 성공 이후,) CoreManager.token에서 토큰값 확인 가능
+  (connect 성공 이후,) GameChat.setting.Token에서 토큰값 확인 가능
 
 ```csharp
 GameChat.connect(USER_ID, (string err, string user_id)=> {
