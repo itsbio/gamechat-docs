@@ -180,12 +180,15 @@ public onErrorReceivedCallback onErrorReceived;
 public class GameChatException
 {
     // Detail Error Code
+   
     // 알 수 없는 Error
     public static readonly int CODE_UNKNOWN_ERROR           = 0;
      // 초기화 실패
     public static readonly int CODE_NOT_INITALIZE           = 1;
     // 파라미터가 올바르지 않은 경우
     public static readonly int CODE_INVAILD_PARAM           = 2;  
+    // 네트웍 연결 오류 및 타임아웃 발생 시
+    public static readonly int CODE_SERVER_NETWORK_ERROR    = 4002;
      // 서버에서 받은 데이터를 파싱할 때 오류
     public static readonly int CODE_SERVER_PARSING_ERROR    = 4003;
 
