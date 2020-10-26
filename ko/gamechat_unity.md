@@ -223,7 +223,6 @@ public class Subscription
 | channel_id | string | 채널 아이디   |
 | user_id    | string | 유저 아이디   |
 | created_at | string | 생성 일자     |
-
 |
 
 ### 1-2. getSubscriptions
@@ -255,26 +254,33 @@ public class Channel
 {
     public string id;
     public string project_id;
+    public string unique_id;
     public string name;
+    public string user_id;
     public int    join_count;
     public string created_at;
     public string updated_at;
+    public bool   is_private = false;
+
 }
 ```
 
 | ID         | type   | desc                         |
 | :--------- | :----- | :--------------------------- |
-| id         | string | 채널 아이디     |
+| id         | string | 채널 아이디(unique)     |
 | project_id | string | 프로젝트 아이디              |
+| unique_id | string |  개발사에서 설정 가능한 채널 아이디(unique) |
 | name       | string | 채널 이름                  |
+| user_id       | string | (채널 생성한) 유저 아이디    |
 | join_count | int    | 유저 수                      |
+| is_private | bool    | 공개 여부                     |
 | created_at | string | 생성 일자                    |
 | updated_at | string | 갱신 일자                    |
 |
 
 ### 2-2. getChannels
 
- - (프로젝트에 내) Channel 데이터를 리스트 형태로 가져올 수 있습니다.
+ - (프로젝트 내) Channel 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```csharp
 GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameChatException Exception) => {
@@ -287,7 +293,7 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
 
     foreach(Channel elem in Channels)
     {
-        //handling each subscription instance
+        //handling each channelInfo instance
     }
 }));
 ```
@@ -299,9 +305,61 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
 | LIMIT      | int    | (가져올) 채널의 수           |
 |
 
-### 2-3. createChannel
+
+### 2-3. getChannel
+
+- (Channel) ID / UniqueID를 통해, Channel 데이터를 가져올 수 있습니다.
+
+```csharp
+//CHANNEL_ID로만 Search 할 경우, CHANNEL_UNIQUE_ID 파라메터에 null을 넣어주세요.
+
+//CHANNEL_ID와 CHANNEL_UNIQUE_ID가 동시에 존재할 경우, CHANNEL_UNIQUE_ID 값을 우선으로 Search합니다.
+
+GameChat.getChannel(CHANNEL_ID, CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameChatException Exception) => {
+
+    if(Exception != null)
+    {
+        // Error 핸들링
+        return;
+    }
+
+    //handling channelInfo instance
+}));
+```
+
+```csharp
+GameChat.getChannel(CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameChatException Exception) => {
+
+    if(Exception != null)
+    {
+        // Error 핸들링
+        return;
+    }
+
+    //handling channelInfo instance
+}));
+```
+
+
+### 2-4. createChannel
 
  - (프로젝트 내) 새로운 Channel Instance를 생성할 수 있습니다.
+
+```csharp
+
+//CHANNEL_UNIQUE_ID는 (개발사에서 설정 가능한) 채널에 대한 unique value 입니다.
+
+GameChat.createChannel(CHANNEL_NAME, CHANNEL_UNIQUE_ID, (Channel channel, GameChatException Exception) => {
+
+    if(Exception != null)
+    {
+        // Error 핸들링
+        return;
+    }
+
+    //handling created channel instance
+}));
+```
 
 ```csharp
 GameChat.createChannel(CHANNEL_NAME, (Channel channel, GameChatException Exception) => {
@@ -313,16 +371,16 @@ GameChat.createChannel(CHANNEL_NAME, (Channel channel, GameChatException Excepti
     }
 
     //handling created channel instance
-
 }));
 ```
 
-| ID         | type   | desc                         |
-| :--------- | :----- | :--------------------------- |
-| CHANNEL_NAME | string | (생성할) 채널 이름 |
+| ID         | type   | required | desc                         |
+| :--------- | :----- | :----- |:--------------------------- |
+| CHANNEL_NAME | string | required |(생성할) 채널 Name |
+| CHANNEL_UNIQUE_ID | string | optional |(생성할) 채널 Unique ID |
 |
 
-### 2-4. updateChannel
+### 2-5. updateChannel
 
  - (프로젝트 내) 기존 Channel Instance의 이름을 갱신할 수 있습니다.
 
@@ -345,7 +403,7 @@ GameChat.updateChannel(CHANNEL_ID, CHANNEL_NAME, (JSONNode result, GameChatExcep
 | CHANNEL_NAME | string | 채널 이름 |
 |
 
-### 2-5. deleteChannel
+### 2-6. deleteChannel
 
 (프로젝트 내, 존재하는) Channel Instance를 삭제할 수 있습니다.
 
@@ -358,7 +416,7 @@ GameChat.deleteChannel(CHANNEL_ID, (JSONNode result, GameChatException Exception
         return;
     }
 
-    //result => deleted channel id/name
+    //result => deleted channel id,name
 
 }));
 ```
@@ -514,7 +572,6 @@ GameChat.updateMember(MEMBER_ID, NICKNAME, PROFILE, MEMO, ADID, DEVICE, NETWORK,
     }
 
     //handling updated Member instance
-
 }));
 ```
 
