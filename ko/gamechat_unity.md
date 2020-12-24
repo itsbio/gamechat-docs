@@ -166,7 +166,7 @@ public delegate void onEventReceivedCallback(string payload);
 public onEventReceivedCallback onEventReceived;
 //'event' Event에 대한, callback
 
-public delegate void onErrorReceivedCallback(string payload);
+public delegate void onErrorReceivedCallback(string result, GameChatException exception);
 public onErrorReceivedCallback onErrorReceived;
 //'error' Event에 대한, callback
 ```
@@ -187,7 +187,7 @@ public class GameChatException
     public static readonly int CODE_NOT_INITALIZE           = 1;
     // 파라미터가 올바르지 않은 경우
     public static readonly int CODE_INVAILD_PARAM           = 2;  
-    // 네트웍 연결 오류 및 타임아웃 발생 시
+    // 이용정지 처리된 유저일 경우 
     public static readonly int CODE_USER_SUSPENSION    = 500;
     // 네트웍 연결 오류 및 타임아웃 발생 시
     public static readonly int CODE_SERVER_NETWORK_ERROR    = 4002;
