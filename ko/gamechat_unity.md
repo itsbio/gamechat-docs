@@ -103,7 +103,7 @@ GameChatDeviceInfo
 | DeviceModel   | string |                 |
 | DeviceModelVersion | string |           |
 | DeviceOSVersion      | string |        |
-| NetworkType      | string |       |
+| NetworkType      | string |   접속 네트워크 타입(CELLULAR, WIFI)  |
 |
 
 ## Communication
@@ -183,21 +183,24 @@ public class GameChatException
    
     // 알 수 없는 Error
     public static readonly int CODE_UNKNOWN_ERROR           = 0;
-     // 초기화 실패
+    // 초기화 실패
     public static readonly int CODE_NOT_INITALIZE           = 1;
     // 파라미터가 올바르지 않은 경우
     public static readonly int CODE_INVAILD_PARAM           = 2;  
     // 네트웍 연결 오류 및 타임아웃 발생 시
+    public static readonly int CODE_USER_SUSPENSION    = 500;
+    // 네트웍 연결 오류 및 타임아웃 발생 시
     public static readonly int CODE_SERVER_NETWORK_ERROR    = 4002;
-     // 서버에서 받은 데이터를 파싱할 때 오류
+    // 서버에서 받은 데이터를 파싱할 때 오류
     public static readonly int CODE_SERVER_PARSING_ERROR    = 4003;
+
+    // HTTP 에러의 경우, 해당 상태코드가 응답코드로 전달됩니다. (400, 403 ...)
 
     // Error Code
     public int code { get; set; }
     // Error Message
     public string message { get; set; }
 }
-
 
 ```
 
@@ -313,7 +316,7 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
 ```csharp
 //CHANNEL_ID로만 Search 할 경우, CHANNEL_UNIQUE_ID 파라메터에 null을 넣어주세요.
 
-//CHANNEL_ID와 CHANNEL_UNIQUE_ID가 동시에 존재할 경우, CHANNEL_UNIQUE_ID 값을 우선으로 Search합니다.
+//CHANNEL_ID와 CHANNEL_UNIQUE_ID값이 함께 존재할 경우, CHANNEL_UNIQUE_ID 값을 우선으로 Search합니다.
 
 GameChat.getChannel(CHANNEL_ID, CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameChatException Exception) => {
 
@@ -347,7 +350,7 @@ GameChat.getChannel(CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameCha
 
 ```csharp
 
-//CHANNEL_UNIQUE_ID는 (개발사에서 설정 가능한) 채널에 대한 unique value 입니다.
+//CHANNEL_UNIQUE_ID는 (개발사에서 선택적으로 설정 가능한) 채널에 대한 unique value 입니다.
 
 GameChat.createChannel(CHANNEL_NAME, CHANNEL_UNIQUE_ID, (Channel channel, GameChatException Exception) => {
 
@@ -376,8 +379,8 @@ GameChat.createChannel(CHANNEL_NAME, (Channel channel, GameChatException Excepti
 
 | ID         | type   | required | desc                         |
 | :--------- | :----- | :----- |:--------------------------- |
-| CHANNEL_NAME | string | required |(생성할) 채널 Name |
-| CHANNEL_UNIQUE_ID | string | optional |(생성할) 채널 Unique ID |
+| CHANNEL_NAME | string | required | (생성할) 채널 Name |
+| CHANNEL_UNIQUE_ID | string | optional | (생성할) 채널 Unique ID |
 |
 
 ### 2-5. updateChannel
@@ -438,6 +441,7 @@ public class Message
         public string type;
         public string lang;
         public string text;
+        public bool translated;
     }
 
     public class User
@@ -464,15 +468,16 @@ public class Message
 | :---------------- | :---------- | :------ | :------------------------------ |
 | message_id        |             | string  | 메시지 유니크 아이디            |
 | channel_id        |             | string  | 채널 아이디                     |
-| sort_id           |             | string  |                                 |
+| sort_id           |             | string  |   (generated) ID                              |
 | message_type      |             | string  | 메세지 타입                     |
-|                   | **content** | **Class** |                                 |
+|                   | **content** | **Class** |                             |
 |                   | type        | string  | 메세지 타입                     |
 |                   | lang        | string  | 메세지 언어                     |
 |                   | text        | string  | 메세지 텍스트                   |
+|                   | translated        | bool  | (자동) 텍스트 번역여부                  |
 | mentions          |             | string  | 멘션(태그)                      |
 | mentions_everyone |             | string  | 전체 메세지 여부                |
-|                   | **sender**  | **Class**   |                                 
+|                   | **sender**  | **Class** |                            |
 |                   | id          | string  | (송신한) 유저 아이디            |
 |                   | name        | string  | (송신한) 유저 닉네임            |
 |                   | profile     | string  | (송신한) 유저 이미지 프로필 url |
@@ -507,10 +512,51 @@ GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, SORT_ID, (L
 | LIMIT      |     | string | (가져올) 메세지의 갯수      |
 | SEARCH     |     | string |                             |
 | QUERY      |     | string |                             |
-| SORT       |     | string |  메시지 리스트 정렬 순(asc/desc )                      |
-| SORT_ID    |     | string |                             |
+| SORT       |     | string |  메시지 리스트 정렬순서 (default : asc) (optional : desc) |
+| SORT_ID    |     | string |   (generated) ID              |
 |
 
+### 3-3. translateMessage
+
+ - (자동번역 기능이 활성화 되어 있을 경우) 임의의 텍스트를 (지정한 언어로) 번역할 수 있습니다.
+
+```csharp
+GameChat.translateMessage(CHANNEL_ID, SORCE_LANG, TARTGET_LANG, TEXT, (List<Message.Content> Messages, GameChatException Exception) => {
+
+    if(Exception != null)
+    {
+        // Error 핸들링
+        return;
+    }
+
+    foreach(Message.Content elem in Messages)
+    {
+        //handling each message instance
+    }
+}));
+
+GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Message.Content> Messages, GameChatException Exception) => {
+
+    if(Exception != null)
+    {
+        // Error 핸들링
+        return;
+    }
+
+    foreach(Message.Content elem in Messages)
+    {
+        //handling each message instance
+    }
+}));
+```
+
+| ID         |     | type   | desc                        |
+| :--------- | :-- | :----- | :-------------------------- |
+| CHANNEL_ID |     | string | 채널 아이디                 |
+| SORCE_LANG     |     | string | (송신 할) 텍스트 언어명 (auto : 자동감지) |
+| TARTGET_LANG      |     | string | (번역 수신 할) 텍스트 언어명 ("," 구분하여 복수 입력 가능 - ex> "en, fr, th")      |
+| TEXT     |     | string |     (송신 할) 텍스트                     |
+|
 
 ### 4-1. Member
 
@@ -540,22 +586,22 @@ public class Member
 
 | ID                          | type    | desc                            |
 | :----------------  | :------ | :------------------------------ |
-| id                            | string  |             |
-| project_id              | string  |                      |
+| id                            | string  |  유저 아이디          |
+| project_id              | string  |    (로그인한) GameChat 프로젝트 아이디            |
 | machine_id            | string  |                                 |
-| nickname             | string  |                     |
-| profile_url             | string  |                     |
+| nickname             | string  |        유저 닉네임           |
+| profile_url             | string  |      (이미지) 프로필 Url           |
 | memo             | string  |                     |
-| country             | string  |                     |
-| remoteip             | string  |                     |
-| adid             | string  |                     |
-| device             | string  |                     |
-| network             | string  |                     |
+| country             | string  |         접속 국가              |
+| remoteip             | string  |     접속 IP             |
+| adid             | string  |        광고 식별자            |
+| device             | string  |          디바이스명          |
+| network             | string  |        접속 네트워크 타입(CELLULAR, WIFI)              |
 | version             | string  |                     |
 | model             | string  |                     |
-| logined_at             | string  |                     |
-| created_at             | string  |                     |
-| updated_at             | string  |                     |
+| logined_at             | string  |   로그인한 일자           |
+| created_at             | string  |   유저 생성 일자                  |
+| updated_at             | string  |   유저 정보 갱신 일자            |
 |
 
 ### 4-2. updateMember
@@ -582,8 +628,9 @@ GameChat.updateMember(MEMBER_ID, NICKNAME, PROFILE, MEMO, ADID, DEVICE, NETWORK,
 | PROFILE      |     | string | 프로필 이미지 url      |
 | MEMO     |     | string |                             |
 | ADID      |     | string |  광고식별자              |
-| DEVICE       |     | string |                             |
-| NETWORK    |     | string |                             |
+| DEVICE       |     | string |    디바이스명                 |
+| NETWORK    |     | string |     접속 네트워크 타입(CELLULAR, WIFI)          |
 | VERSION    |     | string |                             |
 | MODEL    |     | string |                             |
 |
+
