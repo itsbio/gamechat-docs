@@ -47,7 +47,7 @@ GameChat.connect(USER_ID, (Member User, GameChatException Exception)=> {
 
 | ID      | type   | desc        |
 | :------ | :----- | :---------- |
-| USER_ID | string | 유저 아이디 |
+| USER_ID | string | 유저 고유 아이디 |
 |
 
 ### 3. Disconnect from GameChat Server
@@ -221,7 +221,7 @@ public class Subscription
 | :--------- | :----- | :------------ |
 | id         | string | 유니크 아이디 |
 | channel_id | string | 채널 아이디   |
-| user_id    | string | 유저 아이디   |
+| user_id    | string | 유저 고유 아이디   |
 | created_at | string | 생성 일자     |
 |
 
@@ -445,7 +445,6 @@ public class Message
 
     public string message_id;
     public string channel_id;
-    // public string sort_id;
     public string message_type;
     public Content content;
 
@@ -469,7 +468,7 @@ public class Message
 | mentions          |             | string  | 멘션(태그)                      |
 | mentions_everyone |             | string  | 전체 메세지 여부                |
 |                   | **sender**  | **Class** |                            |
-|                   | id          | string  | (송신한) 유저 아이디            |
+|                   | id          | string  | (송신한) 유저 고유 아이디            |
 |                   | name        | string  | (송신한) 유저 닉네임            |
 |                   | profile     | string  | (송신한) 유저 이미지 프로필 url |
 | created_at        |             | string  | 메세지 생성 일자                |
@@ -480,7 +479,7 @@ public class Message
  - (특정 채널에 대해) Message 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```csharp
-GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, SORT_ID, (List<Message> Messages, GameChatException Exception) => {
+GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, (List<Message> Messages, GameChatException Exception) => {
 
     if(Exception != null)
     {
@@ -502,7 +501,7 @@ GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, SORT_ID, (L
 | LIMIT      |     | string | (가져올) 메세지의 갯수      |
 | SEARCH     |     | string |   (메시지 검색 시) 검색 기준 key (ex> content.text) 빈 문자열 전달 시, full scan |
 | QUERY      |     | string |  (메시지 검색 시) 검색 value. 완전 일치만 검색 가능. 빈 문자열 전달 시, full scan  |
-| SORT       |     | string |  메시지 리스트 정렬순서 (default : desc - 가장 최근부터) (optional : asc) |
+| SORT       |     | string |  메시지 리스트 정렬순서 (default : desc - 가장 최근순) (optional : asc) |
 |
 
 ### 3-3. translateMessage
@@ -573,7 +572,7 @@ public class Member
 
 | ID                          | type    | desc                            |
 | :----------------  | :------ | :------------------------------ |
-| id                            | string  |  유저 아이디          |
+| id                            | string  |  유저 고유 아이디          |
 | project_id              | string  |    (로그인한) GameChat 프로젝트 아이디            |
 | nickname             | string  |        유저 닉네임           |
 | profile_url             | string  |      (이미지) 프로필 Url           |
@@ -621,7 +620,7 @@ GameChat.setProfileUrl(MEMBER_ID, PROFILE, (Member member, GameChatException Exc
 
 | ID         |     | type   | desc                        |
 | :--------- | :-- | :----- | :-------------------------- |
-| MEMBER_ID |     | string | 멤버 아이디                 |
-| NICKNAME     |     | string | 닉네임 |
+| MEMBER_ID |     | string |  유저 고유 아이디                 |
+| NICKNAME     |     | string | 유저 닉네임 |
 | PROFILE      |     | string | 프로필 이미지 url      |
 |
