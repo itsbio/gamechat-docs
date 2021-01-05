@@ -28,7 +28,11 @@ GameChat.initialize(PROJECT_ID);
 
 - api를 사용하기 위한 토큰값을 획득합니다.
 
-   => (connect 성공 이후 시점) GameChat.setting.Token 토큰값이 갱신됩니다.
+   => (GameChat.connect 이후 시점) 갱신된 토큰값을 확인할 수 있습니다.
+
+- (토큰값 획득과 함께) 현재 접속 디바이스에 대한 유저정보가 갱신됩니다.
+
+    => GameChat.connect의 콜백으로 전달받는 Member는 갱신된 데이터입니다.
 
 ```csharp
 GameChat.connect(USER_ID, (Member User, GameChatException Exception)=> {
@@ -54,43 +58,42 @@ GameChat.connect(USER_ID, (Member User, GameChatException Exception)=> {
 GameChat.disconnect();
 ```
 
-### 4. Update User Profile
+### 4. User Information
 
  - 유저정보가 저장/갱신됩니다.
 
 ```csharp
-// (connect 성공 이후 시점) 갱신됩니다.
-GameChatSetting GameChat.setting;
+// (connect 이후 시점) 갱신됩니다.
 
-GameChatSetting
-{
-   public string Adid = "";
-   public string MemberId = "";
-   public string NickName = "";
-   public string ProfileUrl = ""; // image profile url
-   public string Token = "";
-}
+string Adid = GameChat.getAdid();
+
+string MemberId = GameChat.getMemberId();
+
+string NickName = GameChat.getNickName();
+
+string ProfileUrl = GameChat.getProfileUrl();
+
+string Token = GameChat.getToken();
 ```
 
 | ID         | type   | desc                          |
 | :--------- | :----- | :---------------------------- |
 | Adid       | string | 광고아이디(Unique identifier) |
-| MemberId   | string | 유저 아이디                   |
+| MemberId   | string | 유저 고유 아이디                   |
 | NickName   | string | 유저 닉네임                   |
 | ProfileUrl | string | 프로필 이미지 url             |
 | Token      | string | Authentification Token        |
 |
 
 ```csharp
-// (initialize 성공 이후 시점) 갱신됩니다.
-GameChatDeviceInfo GameChat.deviceInfo;
+// (initialize 이후 시점) 갱신됩니다.
+
+GameChatDeviceInfo GameChat.getDeviceInfo();
 
 GameChatDeviceInfo
 {
     public string AppVersion = "";
-    public string AppVersionCode = "";
     public string DeviceModel = "";
-    public string DeviceModelVersion = "";
     public string DeviceOSVersion = "";
     public string NetworkType = "";
 }
@@ -98,12 +101,10 @@ GameChatDeviceInfo
 
 | ID         | type   | desc                          |
 | :--------- | :----- | :---------------------------- |
-| AppVersion       | string |  |
-| AppVersionCode   | string |            |
-| DeviceModel   | string |                 |
-| DeviceModelVersion | string |           |
-| DeviceOSVersion      | string |        |
-| NetworkType      | string |   접속 네트워크 타입(CELLULAR, WIFI)  |
+| AppVersion       | string | 앱 버전(Edit > Project Settings > Player > Other Settings)|
+| DeviceModel   | string | 접속 디바이스 모델 |
+| DeviceOSVersion  | string | 접속 디바이스 환경 |
+| NetworkType      | string |   접속 네트워크 타입 (CELLULAR, WIFI)  |
 |
 
 ## Communication
@@ -162,10 +163,6 @@ public delegate void onMessageReceivedCallback(Message message);
 public onMessageReceivedCallback onMessageReceived;
 //'message' Event에 대한, callback
 
-public delegate void onEventReceivedCallback(string payload);
-public onEventReceivedCallback onEventReceived;
-//'event' Event에 대한, callback
-
 public delegate void onErrorReceivedCallback(string result, GameChatException exception);
 public onErrorReceivedCallback onErrorReceived;
 //'error' Event에 대한, callback
@@ -187,8 +184,8 @@ public class GameChatException
     public static readonly int CODE_NOT_INITALIZE           = 1;
     // 파라미터가 올바르지 않은 경우
     public static readonly int CODE_INVAILD_PARAM           = 2;  
-    // 이용정지 처리된 유저일 경우 
-    public static readonly int CODE_USER_SUSPENSION    = 500;
+    // 소켓서버로부터 발생한 오류
+    public static readonly int CODE_SOCKET_SERVER_ERROR     = 500;
     // 네트웍 연결 오류 및 타임아웃 발생 시
     public static readonly int CODE_SERVER_NETWORK_ERROR    = 4002;
     // 서버에서 받은 데이터를 파싱할 때 오류
@@ -260,11 +257,8 @@ public class Channel
     public string unique_id;
     public string name;
     public string user_id;
-    public int    join_count;
     public string created_at;
     public string updated_at;
-    public bool   is_private = false;
-
 }
 ```
 
@@ -272,11 +266,9 @@ public class Channel
 | :--------- | :----- | :--------------------------- |
 | id         | string | 채널 아이디(unique)     |
 | project_id | string | 프로젝트 아이디              |
-| unique_id | string |  개발사에서 설정 가능한 채널 아이디(unique) |
+| unique_id | string |  개발사에서 설정 가능한 채널 아이디 (unique) |
 | name       | string | 채널 이름                  |
-| user_id       | string | (채널 생성한) 유저 아이디    |
-| join_count | int    | 유저 수                      |
-| is_private | bool    | 공개 여부                     |
+| user_id     | string | (채널 생성한) 유저 아이디    |
 | created_at | string | 생성 일자                    |
 | updated_at | string | 갱신 일자                    |
 |
@@ -304,8 +296,8 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
 | ID         | type   | desc                         |
 | :--------- | :----- | :--------------------------- |
 | CHANNEL_ID | string | 채널 아이디 |
-| OFFSET     | int    | (가져올) 채널의 시작 위치 (index)    |
-| LIMIT      | int    | (가져올) 채널의 수           |
+| OFFSET     | int    | (전체 채널 리스트로부터 가져올) 채널의 시작 위치 (index)    |
+| LIMIT      | int    | (가져올) 채널의 갯수           |
 |
 
 
@@ -453,7 +445,7 @@ public class Message
 
     public string message_id;
     public string channel_id;
-    public string sort_id;
+    // public string sort_id;
     public string message_type;
     public Content content;
 
@@ -468,7 +460,6 @@ public class Message
 | :---------------- | :---------- | :------ | :------------------------------ |
 | message_id        |             | string  | 메시지 유니크 아이디            |
 | channel_id        |             | string  | 채널 아이디                     |
-| sort_id           |             | string  |   (generated) ID                              |
 | message_type      |             | string  | 메세지 타입                     |
 |                   | **content** | **Class** |                             |
 |                   | type        | string  | 메세지 타입                     |
@@ -482,7 +473,6 @@ public class Message
 |                   | name        | string  | (송신한) 유저 닉네임            |
 |                   | profile     | string  | (송신한) 유저 이미지 프로필 url |
 | created_at        |             | string  | 메세지 생성 일자                |
-
 |
 
 ### 3-2. getMessages
@@ -508,12 +498,11 @@ GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, SORT_ID, (L
 | ID         |     | type   | desc                        |
 | :--------- | :-- | :----- | :-------------------------- |
 | CHANNEL_ID |     | string | 채널 아이디                 |
-| OFFSET     |     | string | (가져올) 메세지의 시작 위치 |
+| OFFSET     |     | string | (전체 메시지 리스트로부터 가져올) 메세지의 시작 위치 |
 | LIMIT      |     | string | (가져올) 메세지의 갯수      |
-| SEARCH     |     | string |                             |
-| QUERY      |     | string |                             |
-| SORT       |     | string |  메시지 리스트 정렬순서 (default : asc) (optional : desc) |
-| SORT_ID    |     | string |   (generated) ID              |
+| SEARCH     |     | string |   (메시지 검색 시) 검색 기준 key (ex> content.text) 빈 문자열 전달 시, full scan |
+| QUERY      |     | string |  (메시지 검색 시) 검색 value. 완전 일치만 검색 가능. 빈 문자열 전달 시, full scan  |
+| SORT       |     | string |  메시지 리스트 정렬순서 (default : desc - 가장 최근부터) (optional : asc) |
 |
 
 ### 3-3. translateMessage
@@ -567,10 +556,8 @@ public class Member
 {
     public string id = "";
     public string project_id = "";
-    public string machine_id = "";
     public string nickname = "";
     public string profile_url = "";
-    public string memo = "";
     public string country = "";
     public string remoteip = "";
     public string adid = "";
@@ -588,17 +575,15 @@ public class Member
 | :----------------  | :------ | :------------------------------ |
 | id                            | string  |  유저 아이디          |
 | project_id              | string  |    (로그인한) GameChat 프로젝트 아이디            |
-| machine_id            | string  |                                 |
 | nickname             | string  |        유저 닉네임           |
 | profile_url             | string  |      (이미지) 프로필 Url           |
-| memo             | string  |                     |
 | country             | string  |         접속 국가              |
 | remoteip             | string  |     접속 IP             |
 | adid             | string  |        광고 식별자            |
-| device             | string  |          디바이스명          |
+| device             | string  |          접속 디바이스 환경          |
 | network             | string  |        접속 네트워크 타입(CELLULAR, WIFI)              |
-| version             | string  |                     |
-| model             | string  |                     |
+| version             | string  |         접속 앱 버전          |
+| model             | string  |     접속 디바이스 모델         |
 | logined_at             | string  |   로그인한 일자           |
 | created_at             | string  |   유저 생성 일자                  |
 | updated_at             | string  |   유저 정보 갱신 일자            |
@@ -606,19 +591,32 @@ public class Member
 
 ### 4-2. updateMember
 
- - 서버의 유저 정보를 갱신할 수 있습니다.
+ - 채팅 서버의 유저 정보를 갱신할 수 있습니다.
 
 ```csharp
-GameChat.updateMember(MEMBER_ID, NICKNAME, PROFILE, MEMO, ADID, DEVICE, NETWORK, VERSION, MODEL, (Member member, GameChatException Exception) => {
+
+//유저 닉네임 업데이트
+GameChat.setNickname(MEMBER_ID, NICKNAME, (Member member, GameChatException Exception) => {
 
     if(Exception != null)
     {
         // Error 핸들링
         return;
     }
-
     //handling updated Member instance
 }));
+
+//유저 프로필 이미지 url 업데이트
+GameChat.setProfileUrl(MEMBER_ID, PROFILE, (Member member, GameChatException Exception) => {
+
+    if(Exception != null)
+    {
+        // Error 핸들링
+        return;
+    }
+    //handling updated Member instance
+}));
+
 ```
 
 | ID         |     | type   | desc                        |
@@ -626,11 +624,4 @@ GameChat.updateMember(MEMBER_ID, NICKNAME, PROFILE, MEMO, ADID, DEVICE, NETWORK,
 | MEMBER_ID |     | string | 멤버 아이디                 |
 | NICKNAME     |     | string | 닉네임 |
 | PROFILE      |     | string | 프로필 이미지 url      |
-| MEMO     |     | string |                             |
-| ADID      |     | string |  광고식별자              |
-| DEVICE       |     | string |    디바이스명                 |
-| NETWORK    |     | string |     접속 네트워크 타입(CELLULAR, WIFI)          |
-| VERSION    |     | string |                             |
-| MODEL    |     | string |                             |
 |
-
