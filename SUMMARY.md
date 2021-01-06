@@ -4,4 +4,6 @@
 
 ## 한국어
 
-- [GameChat Unity SDK](ko/gamechat_unity.md)
+- [Dashboard](ko/gamechat_dashboard.md)
+- [Unity SDK](ko/gamechat_unity.md)
+
