@@ -15,7 +15,7 @@ NAVER CLOUD PLATFORM의 Game Chat에서 제공하는 대시보드에 대한 가�
 
 **Q. 대시보드에서 어떤 운영 기능이 포함되나요?**
 
-대시보드에는 채팅 관련 통계 확인이 가능하고 NAVER CLOUD PLATFORM의 서비스와 연동하여 PAPAGO 번역 등 다양한 기능을 제어할 수 있습니다.
+대시보드에는 채팅 관련 통계 확인이 가능하고 NAVER CLOUD PLATFORM의 서비스와 연동하여 Papago 번역 등 다양한 기능을 제어할 수 있습니다.
 
 ## Game Chat 대시보드 시작하기
 
@@ -115,9 +115,9 @@ Game Chat의 전반적인 환경을 설정하고 채팅을 운영하기 위한 �
 
 프로젝트의 기본 정보를 확인하고 프로젝트명, 금칙어 설정 등을 수정할 수 있습니다.
 
-PAPAGO를 활성화하면 채팅 번역 기능을 사용할 수 있습니다.
+Papago를 활성화하면 채팅 번역 기능을 사용할 수 있습니다.
 
-네이버 클라우드와 연동을 위한 PAPAGO 키값을 추가해야 합니다.
+네이버 클라우드와 연동을 위한 Papago 키값을 추가해야 합니다.
 
 [NAVER AI Application 사용 가이드](https://docs.ncloud.com/ko/naveropenapi_v3/application.html)를 참고하여 키값을 입력해 주세요.
 
