@@ -186,6 +186,8 @@ public class GameChatException
     public static readonly int CODE_INVAILD_PARAM           = 2;  
     // 소켓서버로부터 발생한 오류
     public static readonly int CODE_SOCKET_SERVER_ERROR     = 500;
+     //소켓으로부터 발생한 오류
+    public static readonly int CODE_SOCKET_ERROR = -501;  
     // 네트웍 연결 오류 및 타임아웃 발생 시
     public static readonly int CODE_SERVER_NETWORK_ERROR    = 4002;
     // 서버에서 받은 데이터를 파싱할 때 오류
@@ -428,14 +430,6 @@ GameChat.deleteChannel(CHANNEL_ID, (JSONNode result, GameChatException Exception
 ```csharp
 public class Message
 {
-    public class Content
-    {
-        public string type;
-        public string lang;
-        public string text;
-        public bool translated;
-    }
-
     public class User
     {
         public string id;
@@ -446,7 +440,7 @@ public class Message
     public string message_id;
     public string channel_id;
     public string message_type;
-    public Content content;
+    public string content;
 
     public string mentions;
     public bool mentions_everyone;
@@ -459,12 +453,8 @@ public class Message
 | :---------------- | :---------- | :------ | :------------------------------ |
 | message_id        |             | string  | 메시지 유니크 아이디            |
 | channel_id        |             | string  | 채널 아이디                     |
-| message_type      |             | string  | 메세지 타입                     |
-|                   | **content** | **Class** |                             |
-|                   | type        | string  | 메세지 타입                     |
-|                   | lang        | string  | 메세지 언어                     |
-|                   | text        | string  | 메세지 텍스트                   |
-|                   | translated        | bool  | (자동) 텍스트 번역여부                  |
+| message_type   |             | string  | 메세지 타입                     |
+| content              |           | string  | 메세지 내용 (json string)          |
 | mentions          |             | string  | 멘션(태그)                      |
 | mentions_everyone |             | string  | 전체 메세지 여부                |
 |                   | **sender**  | **Class** |                            |
@@ -508,8 +498,31 @@ GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, (List<Messa
 
  - (자동번역 기능이 활성화 되어 있을 경우) 임의의 텍스트를 (지정한 언어로) 번역할 수 있습니다.
 
+> 해당 기능은, NaverCloud PAPAGO NMT 상품을 함께 연동할 경우 사용 가능합니다. [[ NCP Papago NMT ]](hhttps://www.ncloud.com/product/aiService/papagoNmt)
+
+
+ - (Received) Translation Data Class (per Unit)
+
 ```csharp
-GameChat.translateMessage(CHANNEL_ID, SORCE_LANG, TARTGET_LANG, TEXT, (List<Message.Content> Messages, GameChatException Exception) => {
+public class Translation
+{
+    public string detectLang = "";
+    public string lang = "";
+    public bool translated = false;
+    public string message = "";
+}
+```
+
+| ID                |             | type    | desc                            |
+| :---------------- | :---------- | :------ | :------------------------------ |
+| detectLang        |             | string  |   출발 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
+| lang                  |             | string  | 도착 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
+| translated        |             | bool  | 번역 성공 여부            |
+| message              |           | string  | 결과 메세지 내용 (json string)          |
+|
+
+```csharp
+GameChat.translateMessage(CHANNEL_ID, SORCE_LANG, TARTGET_LANG, TEXT, (List<Translation> Translations, GameChatException Exception) => {
 
     if(Exception != null)
     {
@@ -517,13 +530,13 @@ GameChat.translateMessage(CHANNEL_ID, SORCE_LANG, TARTGET_LANG, TEXT, (List<Mess
         return;
     }
 
-    foreach(Message.Content elem in Messages)
+    foreach(Translation elem in Translations)
     {
-        //handling each message instance
+        //handling each Translation instance
     }
 }));
 
-GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Message.Content> Messages, GameChatException Exception) => {
+GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Translation> Translations, GameChatException Exception) => {
 
     if(Exception != null)
     {
@@ -531,9 +544,9 @@ GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Message.Content>
         return;
     }
 
-    foreach(Message.Content elem in Messages)
+    foreach(Translation elem in Translations)
     {
-        //handling each message instance
+        //handling each Translation instance
     }
 }));
 ```
@@ -541,9 +554,9 @@ GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Message.Content>
 | ID         |     | type   | desc                        |
 | :--------- | :-- | :----- | :-------------------------- |
 | CHANNEL_ID |     | string | 채널 아이디                 |
-| SORCE_LANG     |     | string | (송신 할) 텍스트 언어명 (auto : 자동감지) |
-| TARTGET_LANG      |     | string | (번역 수신 할) 텍스트 언어명 ("," 구분하여 복수 입력 가능 - ex> "en, fr, th")      |
-| TEXT     |     | string |     (송신 할) 텍스트                     |
+| SORCE_LANG     |     | string | (송신 할) 텍스트 언어명 (auto : 자동감지) [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)   |
+| TARTGET_LANG      |     | string | (번역 수신 할) 텍스트 언어 코드 ("," 구분하여 복수 입력 가능 - ex> "en, fr, th")   [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)    |
+| TEXT     |     | string |     (송신 할) 텍스트                  |
 |
 
 ### 4-1. Member
