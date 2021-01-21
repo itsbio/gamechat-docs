@@ -18,13 +18,13 @@ GameChat.initialize(PROJECT_ID);
 | ID         | type   | desc            |
 | :--------- | :----- | :-------------- |
 | PROJECT_ID | string | 프로젝트 아이디 |
-|
+
 
 ### 2. Connect to GameChat Server
 
-- 유저아이디를 통해, GAMECHAT 소켓 서버에 접속합니다. 
+- 유저아이디를 통해, GAMECHAT 소켓 서버에 접속합니다.
 
-    => GAMECHAT 프로젝트 내에서, 유저아이디는 Unique 한 값입니다. 
+    => GAMECHAT 프로젝트 내에서, 유저아이디는 Unique 한 값입니다.
 
 - api를 사용하기 위한 토큰값을 획득합니다.
 
@@ -48,7 +48,7 @@ GameChat.connect(USER_ID, (Member User, GameChatException Exception)=> {
 | ID      | type   | desc        |
 | :------ | :----- | :---------- |
 | USER_ID | string | 유저 고유 아이디 |
-|
+
 
 ### 3. Disconnect from GameChat Server
 
@@ -83,7 +83,7 @@ string Token = GameChat.getToken();
 | NickName   | string | 유저 닉네임                   |
 | ProfileUrl | string | 프로필 이미지 url             |
 | Token      | string | Authentification Token        |
-|
+
 
 ```csharp
 // (initialize 이후 시점) 갱신됩니다.
@@ -105,7 +105,7 @@ GameChatDeviceInfo
 | DeviceModel   | string | 접속 디바이스 모델 |
 | DeviceOSVersion  | string | 접속 디바이스 환경 |
 | NetworkType      | string |   접속 네트워크 타입 (CELLULAR, WIFI)  |
-|
+
 
 ## Communication
 
@@ -122,7 +122,7 @@ GameChat.unsubscribe(CHANNEL_ID);
 | ID         | type   | desc        |
 | :--------- | :----- | :---------- |
 | CHANNEL_ID | string | 채널 아이디 |
-|
+
 
 ### 2. SendMessage
 
@@ -136,7 +136,7 @@ GameChat.sendMessage(CHANNEL_ID, MESSAGE);
 | :--------- | :----- | :----------------- |
 | CHANNEL_ID | string | 채널 아이디        |
 | MESSAGE    | string | 전송 메시지 텍스트 |
-|
+
 
 ## Event
 
@@ -168,7 +168,7 @@ public onErrorReceivedCallback onErrorReceived;
 //'error' Event에 대한, callback
 ```
 
-## Exception 
+## Exception
 
 - GAMECHAT API 사용 중에 발생하는, Exception에 대한 공통 처리 Class 입니다.
 
@@ -177,17 +177,17 @@ public onErrorReceivedCallback onErrorReceived;
 public class GameChatException
 {
     // Detail Error Code
-   
+
     // 알 수 없는 Error
     public static readonly int CODE_UNKNOWN_ERROR           = 0;
     // 초기화 실패
     public static readonly int CODE_NOT_INITALIZE           = 1;
     // 파라미터가 올바르지 않은 경우
-    public static readonly int CODE_INVAILD_PARAM           = 2;  
+    public static readonly int CODE_INVAILD_PARAM           = 2;
     // 소켓서버로부터 발생한 오류
     public static readonly int CODE_SOCKET_SERVER_ERROR     = 500;
      //소켓으로부터 발생한 오류
-    public static readonly int CODE_SOCKET_ERROR = -501;  
+    public static readonly int CODE_SOCKET_ERROR = -501;
     // 네트웍 연결 오류 및 타임아웃 발생 시
     public static readonly int CODE_SERVER_NETWORK_ERROR    = 4002;
     // 서버에서 받은 데이터를 파싱할 때 오류
@@ -225,7 +225,7 @@ public class Subscription
 | channel_id | string | 채널 아이디   |
 | user_id    | string | 유저 고유 아이디   |
 | created_at | string | 생성 일자     |
-|
+
 
 ### 1-2. getSubscriptions
 
@@ -273,7 +273,7 @@ public class Channel
 | user_id     | string | (채널 생성한) 유저 아이디    |
 | created_at | string | 생성 일자                    |
 | updated_at | string | 갱신 일자                    |
-|
+
 
 ### 2-2. getChannels
 
@@ -292,7 +292,7 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
     {
         //handling each channelInfo instance
     }
-}));
+});
 ```
 
 | ID         | type   | desc                         |
@@ -300,7 +300,6 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
 | CHANNEL_ID | string | 채널 아이디 |
 | OFFSET     | int    | (전체 채널 리스트로부터 가져올) 채널의 시작 위치 (index)    |
 | LIMIT      | int    | (가져올) 채널의 갯수           |
-|
 
 
 ### 2-3. getChannel
@@ -321,7 +320,7 @@ GameChat.getChannel(CHANNEL_ID, CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Chann
     }
 
     //handling channelInfo instance
-}));
+});
 ```
 
 ```csharp
@@ -334,7 +333,7 @@ GameChat.getChannel(CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameCha
     }
 
     //handling channelInfo instance
-}));
+});
 ```
 
 
@@ -355,7 +354,7 @@ GameChat.createChannel(CHANNEL_NAME, CHANNEL_UNIQUE_ID, (Channel channel, GameCh
     }
 
     //handling created channel instance
-}));
+});
 ```
 
 ```csharp
@@ -368,14 +367,14 @@ GameChat.createChannel(CHANNEL_NAME, (Channel channel, GameChatException Excepti
     }
 
     //handling created channel instance
-}));
+});
 ```
 
 | ID         | type   | required | desc                         |
 | :--------- | :----- | :----- |:--------------------------- |
 | CHANNEL_NAME | string | required | (생성할) 채널 Name |
 | CHANNEL_UNIQUE_ID | string | optional | (생성할) 채널 Unique ID |
-|
+
 
 ### 2-5. updateChannel
 
@@ -391,14 +390,14 @@ GameChat.updateChannel(CHANNEL_ID, CHANNEL_NAME, (JSONNode result, GameChatExcep
     }
 
     //result => updated channel id
-}));
+});
 ```
 
 | ID         | type   | desc                         |
 | :--------- | :----- | :--------------------------- |
 | CHANNEL_ID | string | 채널 아이디 |
 | CHANNEL_NAME | string | 채널 이름 |
-|
+
 
 ### 2-6. deleteChannel
 
@@ -415,13 +414,13 @@ GameChat.deleteChannel(CHANNEL_ID, (JSONNode result, GameChatException Exception
 
     //result => deleted channel id,name
 
-}));
+});
 ```
 
 | ID         | type   | desc                         |
 | :--------- | :----- | :--------------------------- |
 | CHANNEL_ID | string | 채널 아이디 |
-|
+
 
 ### 3-1. Message
 
@@ -462,7 +461,7 @@ public class Message
 |                   | name        | string  | (송신한) 유저 닉네임            |
 |                   | profile     | string  | (송신한) 유저 이미지 프로필 url |
 | created_at        |             | string  | 메세지 생성 일자                |
-|
+
 
 ### 3-2. getMessages
 
@@ -481,18 +480,18 @@ GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, (List<Messa
     {
         //handling each message instance
     }
-}));
+});
 ```
 
-| ID         |     | type   | desc                        |
-| :--------- | :-- | :----- | :-------------------------- |
-| CHANNEL_ID |     | string | 채널 아이디                 |
-| OFFSET     |     | string | (전체 메시지 리스트로부터 가져올) 메세지의 시작 위치 |
-| LIMIT      |     | string | (가져올) 메세지의 갯수      |
-| SEARCH     |     | string |   (메시지 검색 시) 검색 기준 key (ex> content.text) 빈 문자열 전달 시, full scan |
-| QUERY      |     | string |  (메시지 검색 시) 검색 value. 완전 일치만 검색 가능. 빈 문자열 전달 시, full scan  |
-| SORT       |     | string |  메시지 리스트 정렬순서 (default : desc - 가장 최근순) (optional : asc) |
-|
+| ID         | type   | desc                        |
+| :--------- | :----- | :-------------------------- |
+| CHANNEL_ID | string | 채널 아이디                 |
+| OFFSET     | string | (전체 메시지 리스트로부터 가져올) 메세지의 시작 위치 |
+| LIMIT      | string | (가져올) 메세지의 갯수      |
+| SEARCH     | string |   (메시지 검색 시) 검색 기준 key (ex> content.text) 빈 문자열 전달 시, full scan |
+| QUERY      | string |  (메시지 검색 시) 검색 value. 완전 일치만 검색 가능. 빈 문자열 전달 시, full scan  |
+| SORT       | string |  메시지 리스트 정렬순서 (default : desc - 가장 최근순) (optional : asc) |
+
 
 ### 3-3. translateMessage
 
@@ -513,13 +512,13 @@ public class Translation
 }
 ```
 
-| ID                |             | type    | desc                            |
-| :---------------- | :---------- | :------ | :------------------------------ |
-| detectLang        |             | string  |   출발 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
-| lang                  |             | string  | 도착 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
-| translated        |             | bool  | 번역 성공 여부            |
-| message              |           | string  | 결과 메세지 내용 (json string)          |
-|
+| ID                | type    | desc                            |
+| :---------------- | :------ | :------------------------------ |
+| detectLang        | string  |   출발 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
+| lang                  | string  | 도착 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
+| translated        | bool  | 번역 성공 여부            |
+| message           | string  | 결과 메세지 내용 (json string)          |
+
 
 ```csharp
 GameChat.translateMessage(CHANNEL_ID, SORCE_LANG, TARTGET_LANG, TEXT, (List<Translation> Translations, GameChatException Exception) => {
@@ -534,7 +533,7 @@ GameChat.translateMessage(CHANNEL_ID, SORCE_LANG, TARTGET_LANG, TEXT, (List<Tran
     {
         //handling each Translation instance
     }
-}));
+});
 
 GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Translation> Translations, GameChatException Exception) => {
 
@@ -548,16 +547,16 @@ GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Translation> Tra
     {
         //handling each Translation instance
     }
-}));
+});
 ```
 
-| ID         |     | type   | desc                        |
-| :--------- | :-- | :----- | :-------------------------- |
-| CHANNEL_ID |     | string | 채널 아이디                 |
-| SORCE_LANG     |     | string | (송신 할) 텍스트 언어명 (auto : 자동감지) [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)   |
-| TARTGET_LANG      |     | string | (번역 수신 할) 텍스트 언어 코드 ("," 구분하여 복수 입력 가능 - ex> "en, fr, th")   [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)    |
-| TEXT     |     | string |     (송신 할) 텍스트                  |
-|
+| ID         | type   | desc                        |
+| :--------- | :----- | :-------------------------- |
+| CHANNEL_ID | string | 채널 아이디                 |
+| SORCE_LANG | string | (송신 할) 텍스트 언어명 (auto : 자동감지) [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)   |
+| TARTGET_LANG      | string | (번역 수신 할) 텍스트 언어 코드 ("," 구분하여 복수 입력 가능 - ex> "en, fr, th")   [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)    |
+| TEXT     | string |     (송신 할) 텍스트                  |
+
 
 ### 4-1. Member
 
@@ -599,7 +598,7 @@ public class Member
 | logined_at             | string  |   로그인한 일자           |
 | created_at             | string  |   유저 생성 일자                  |
 | updated_at             | string  |   유저 정보 갱신 일자            |
-|
+
 
 ### 4-2. updateMember
 
@@ -616,7 +615,7 @@ GameChat.setNickname(MEMBER_ID, NICKNAME, (Member member, GameChatException Exce
         return;
     }
     //handling updated Member instance
-}));
+});
 
 //유저 프로필 이미지 url 업데이트
 GameChat.setProfileUrl(MEMBER_ID, PROFILE, (Member member, GameChatException Exception) => {
@@ -627,13 +626,13 @@ GameChat.setProfileUrl(MEMBER_ID, PROFILE, (Member member, GameChatException Exc
         return;
     }
     //handling updated Member instance
-}));
+});
 
 ```
 
-| ID         |     | type   | desc                        |
-| :--------- | :-- | :----- | :-------------------------- |
-| MEMBER_ID |     | string |  유저 고유 아이디                 |
-| NICKNAME     |     | string | 유저 닉네임 |
-| PROFILE      |     | string | 프로필 이미지 url      |
-|
+| ID         | type   | desc                        |
+| :--------- | :----- | :-------------------------- |
+| MEMBER_ID |  string |  유저 고유 아이디                 |
+| NICKNAME     | string | 유저 닉네임 |
+| PROFILE      | string | 프로필 이미지 url      |
+
