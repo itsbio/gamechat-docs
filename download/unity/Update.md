@@ -1,6 +1,6 @@
 ### 최신버전 : v1.0.0
 
-[Unity SDK 다운로드](https://kr.object.ncloudstorage.com/itsb/GameChatSDK/GameChatUnity_v0.3.0%28Beta%29.unitypackage)
+[Unity SDK 다운로드](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatPlugin_v1.0.0_20210121.unitypackage)
 
 <br/>
 
