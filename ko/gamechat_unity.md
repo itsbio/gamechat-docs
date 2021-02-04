@@ -3,13 +3,13 @@ search:
   keyword: ["gamechat"]
 ---
 
-# GameChat Unity SDK
+# Game Chat Unity SDK
 
 ## Authentification
 
 ### 1. Initializing with Project ID
 
- - 생성한 GAMECHAT 프로젝트 아이디를 통해, GAMECHAT 인스턴스를 초기화합니다.
+ - 생성한 Game Chat 프로젝트 아이디를 통해, Game Chat 인스턴스를 초기화합니다.
 
 ```csharp
 GameChat.initialize(PROJECT_ID);
@@ -20,11 +20,11 @@ GameChat.initialize(PROJECT_ID);
 | PROJECT_ID | string | 프로젝트 아이디 |
 
 
-### 2. Connect to GameChat Server
+### 2. Connect to Game Chat Server
 
-- 유저아이디를 통해, GAMECHAT 소켓 서버에 접속합니다.
+- 유저아이디를 통해, Game Chat 소켓 서버에 접속합니다.
 
-    => GAMECHAT 프로젝트 내에서, 유저아이디는 Unique 한 값입니다.
+    => Game Chat 프로젝트 내에서, 유저아이디는 Unique 한 값입니다.
 
 - api를 사용하기 위한 토큰값을 획득합니다.
 
@@ -50,9 +50,9 @@ GameChat.connect(USER_ID, (Member User, GameChatException Exception)=> {
 | USER_ID | string | 유저 고유 아이디 |
 
 
-### 3. Disconnect from GameChat Server
+### 3. Disconnect from Game Chat Server
 
- - 연결된 GAMECHAT 소켓서버와의 연결을 해제합니다.
+ - 연결된 Game Chat 소켓서버와의 연결을 해제합니다.
 
 ```csharp
 GameChat.disconnect();
@@ -142,7 +142,7 @@ GameChat.sendMessage(CHANNEL_ID, MESSAGE);
 
 ### Binding Event
 
-- GAMECHAT 소켓서버로부터 수신하는 이벤트에 대해, 커스텀 핸들러를 등록/해제 할 수 있습니다,
+- Game Chat 소켓서버로부터 수신하는 이벤트에 대해, 커스텀 핸들러를 등록/해제 할 수 있습니다,
 
 ```csharp
 GameChat.dispatcher.(EVENT_NAME) += (CALLBACK_FUNCTION);
@@ -170,7 +170,7 @@ public onErrorReceivedCallback onErrorReceived;
 
 ## Exception
 
-- GAMECHAT API 사용 중에 발생하는, Exception에 대한 공통 처리 Class 입니다.
+- Game Chat API 사용 중에 발생하는, Exception에 대한 공통 처리 Class 입니다.
 
 ```csharp
 
@@ -585,7 +585,7 @@ public class Member
 | ID                          | type    | desc                            |
 | :----------------  | :------ | :------------------------------ |
 | id                            | string  |  유저 고유 아이디          |
-| project_id              | string  |    (로그인한) GameChat 프로젝트 아이디            |
+| project_id              | string  |    (로그인한) Game Chat 프로젝트 아이디   |
 | nickname             | string  |        유저 닉네임           |
 | profile_url             | string  |      (이미지) 프로필 Url           |
 | country             | string  |         접속 국가              |
