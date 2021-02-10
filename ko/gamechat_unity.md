@@ -337,89 +337,14 @@ GameChat.getChannel(CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameCha
 ```
 
 
-### 2-4. createChannel
+### 2-4. create / update / delete Channel
 
- - (프로젝트 내) 새로운 Channel Instance를 생성할 수 있습니다.
+ - (프로젝트 내) 새로운 Channel Instance를 생성 / 갱신 / 삭제할 수 있습니다.
 
-```csharp
+> 보안상의 이슈로, SDK를 통한 채널의 CRUD 기능은 제거되었습니다.  
+Open API를 통해, Server to Server로  채널의 CRUD를 사용하실 수 있습니다.
 
-//CHANNEL_UNIQUE_ID는 (개발사에서 선택적으로 설정 가능한) 채널에 대한 unique value 입니다.
-
-GameChat.createChannel(CHANNEL_NAME, CHANNEL_UNIQUE_ID, (Channel channel, GameChatException Exception) => {
-
-    if(Exception != null)
-    {
-        // Error 핸들링
-        return;
-    }
-
-    //handling created channel instance
-});
-```
-
-```csharp
-GameChat.createChannel(CHANNEL_NAME, (Channel channel, GameChatException Exception) => {
-
-    if(Exception != null)
-    {
-        // Error 핸들링
-        return;
-    }
-
-    //handling created channel instance
-});
-```
-
-| ID         | type   | required | desc                         |
-| :--------- | :----- | :----- |:--------------------------- |
-| CHANNEL_NAME | string | required | (생성할) 채널 Name |
-| CHANNEL_UNIQUE_ID | string | optional | (생성할) 채널 Unique ID |
-
-
-### 2-5. updateChannel
-
- - (프로젝트 내) 기존 Channel Instance의 이름을 갱신할 수 있습니다.
-
-```csharp
-GameChat.updateChannel(CHANNEL_ID, CHANNEL_NAME, (JSONNode result, GameChatException Exception) => {
-
-    if(Exception != null)
-    {
-        // Error 핸들링
-        return;
-    }
-
-    //result => updated channel id
-});
-```
-
-| ID         | type   | desc                         |
-| :--------- | :----- | :--------------------------- |
-| CHANNEL_ID | string | 채널 아이디 |
-| CHANNEL_NAME | string | 채널 이름 |
-
-
-### 2-6. deleteChannel
-
-(프로젝트 내, 존재하는) Channel Instance를 삭제할 수 있습니다.
-
-```csharp
-GameChat.deleteChannel(CHANNEL_ID, (JSONNode result, GameChatException Exception) => {
-
-    if(Exception != null)
-    {
-        // Error 핸들링
-        return;
-    }
-
-    //result => deleted channel id,name
-
-});
-```
-
-| ID         | type   | desc                         |
-| :--------- | :----- | :--------------------------- |
-| CHANNEL_ID | string | 채널 아이디 |
+[ Guide => [ Open API - Channel Create / Update / Delete ]](https://docs.gamechat.kr/undefined/gamechat_api#api)
 
 
 ### 3-1. Message
