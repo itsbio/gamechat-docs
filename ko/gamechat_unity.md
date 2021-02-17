@@ -531,7 +531,8 @@ public class Member
 
 ```csharp
 
-//유저 닉네임 업데이트
+// 유저 닉네임 업데이트
+// 닉네임 허용 문자열은 whitespace(spaces, tabs, line breaks)를 포함하지 않는 2~128자 입니다.
 GameChat.setNickname(MEMBER_ID, NICKNAME, (Member member, GameChatException Exception) => {
 
     if(Exception != null)
