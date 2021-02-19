@@ -8,6 +8,7 @@ search:
 ## Authentification
 
 ### 1. 대시보드에서 설정에서 프로젝트ID 를 확인 합니다. 
+[GameChat.min.js](https://kr.object.ncloudstorage.com/gamechat/gamechat.min.js) 을 다운로드 합니다.
 
 <script src="GameChat.min.js"></script>
 
