@@ -280,7 +280,7 @@ public class Channel
  - (프로젝트 내) Channel 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```csharp
-GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameChatException Exception) => {
+GameChat.getChannels(OFFSET, LIMIT, (List<Channel> Channels, GameChatException Exception) => {
 
     if(Exception != null)
     {
@@ -297,7 +297,6 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
 
 | ID         | type   | desc                         |
 | :--------- | :----- | :--------------------------- |
-| CHANNEL_ID | string | 채널 아이디 |
 | OFFSET     | int    | (전체 채널 리스트로부터 가져올) 채널의 시작 위치 (index)    |
 | LIMIT      | int    | (가져올) 채널의 갯수           |
 
@@ -311,7 +310,7 @@ GameChat.getChannels(CHANNEL_ID, OFFSET, LIMIT, (List<Channel> Channels, GameCha
 
 //CHANNEL_ID와 CHANNEL_UNIQUE_ID값이 함께 존재할 경우, CHANNEL_UNIQUE_ID 값을 우선으로 Search합니다.
 
-GameChat.getChannel(CHANNEL_ID, CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameChatException Exception) => {
+GameChat.getChannel(CHANNEL_ID, CHANNEL_UNIQUE_ID,  (Channel Channel, GameChatException Exception) => {
 
     if(Exception != null)
     {
@@ -324,7 +323,7 @@ GameChat.getChannel(CHANNEL_ID, CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Chann
 ```
 
 ```csharp
-GameChat.getChannel(CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameChatException Exception) => {
+GameChat.getChannel(CHANNEL_UNIQUE_ID, (Channel Channel, GameChatException Exception) => {
 
     if(Exception != null)
     {
@@ -335,6 +334,11 @@ GameChat.getChannel(CHANNEL_UNIQUE_ID, OFFSET, LIMIT, (Channel Channels, GameCha
     //handling channelInfo instance
 });
 ```
+
+| ID         | type   | desc                         |
+| :--------- | :----- | :--------------------------- |
+| CHANNEL_ID | string | 채널 아이디 (auto generated) |
+| CHANNEL_UNIQUE_ID  | string | 채널 (고유) 아이디 (customizing available) |
 
 
 ### 2-4. create / update / delete Channel
