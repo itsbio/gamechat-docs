@@ -1,13 +1,14 @@
 ---
 search:
-  keyword: ["gamechat"]
+  keyword: ['gamechat']
 ---
 
 # Game Chat Javascript SDK
 
 ## Authentification
 
-### 1. 대시보드에서 설정에서 프로젝트ID 를 확인 합니다. 
+### 1. 대시보드에서 설정에서 프로젝트ID 를 확인 합니다.
+
 [GameChat.min.js](https://kr.object.ncloudstorage.com/gamechat/gamechat.min.js) 을 다운로드 합니다.
 
 <script src="GameChat.min.js"></script>
@@ -27,17 +28,17 @@ gc.initialize(projectId);
 
 ```javascript
 gc.setUser({
-    id: 'userId',
-    name: 'Nickname'
+  id: 'userId',
+  name: 'Nickname',
 });
-gc.connect(user_id,(err, res) => {
-    if(err) console.log(err);
+gc.connect(user_id, (err, res) => {
+  if (err) console.log(err);
 });
 ```
 
 ### 3. Disconnect from Game Chat Server
 
- - 연결된 Game Chat 소켓서버와의 연결을 해제합니다.
+- 연결된 Game Chat 소켓서버와의 연결을 해제합니다.
 
 ```javascript
 gc.disconnect();
@@ -58,7 +59,6 @@ gc.unsubscribe(CHANNEL_ID);
 | :--------- | :----- | :---------- |
 | CHANNEL_ID | string | 채널 아이디 |
 
-
 ### 2. SendMessage
 
 - 채널 아이디로, 특정 채널에 메시지를 송신합니다.
@@ -72,45 +72,39 @@ gc.sendMessage(CHANNEL_ID, MESSAGE);
 | CHANNEL_ID | string | 채널 아이디        |
 | MESSAGE    | string | 전송 메시지 텍스트 |
 
-
 ## Event
 
 ### Binding Event
 
 - Game Chat 소켓서버로부터 수신하는 이벤트에 대해, 이벤트 핸들러를 등록/해제 할 수 있습니다,
 
-
 ```javascript
 // 메시지 수신
-sc.bind('onMessageReceived',function(channel, message) {        
-});
+gc.bind('onMessageReceived', function (channel, message) {});
 // 오류 메시지
-sc.bind('onErrorReceived',function(channel, message) {
-});
+gc.bind('onErrorReceived', function (channel, message) {});
 // 접속 성공
-sc.bind('onConnected',function(channel, message) {
-});
+gc.bind('onConnected', function (channel, message) {});
 // 접속 종료
-sc.bind('onDisconnected',function(reason) { 
-});
+gc.bind('onDisconnected', function (reason) {});
 ```
 
 ## Client API
 
 ### 1-1. Subscription
 
- - Subscription Data Class (per Unit)
+- Subscription Data Class (per Unit)
 
-| ID         | type   | desc          |
-| :--------- | :----- | :------------ |
-| id         | string | 유니크 아이디 |
-| channel_id | string | 채널 아이디   |
-| user_id    | string | 유저 고유 아이디   |
-| created_at | string | 생성 일자     |
+| ID         | type   | desc             |
+| :--------- | :----- | :--------------- |
+| id         | string | 유니크 아이디    |
+| channel_id | string | 채널 아이디      |
+| user_id    | string | 유저 고유 아이디 |
+| created_at | string | 생성 일자        |
 
 ### 1-2. getSubscriptions
 
- - (특정 채널에 대해) Subscription 데이터를 리스트 형태로 가져올 수 있습니다.
+- (특정 채널에 대해) Subscription 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```javascript
 gc.getSubscriptions(CHANNEL_ID, OFFSET, LIMIT, function(err, subscriptions)
@@ -121,7 +115,7 @@ gc.getSubscriptions(CHANNEL_ID, OFFSET, LIMIT, function(err, subscriptions)
 
 ### 2-1. Channel
 
- - Channel Data Class (per Unit)
+- Channel Data Class (per Unit)
 
 ```csharp
 public class Channel
@@ -136,68 +130,79 @@ public class Channel
 }
 ```
 
-| ID         | type   | desc                         |
-| :--------- | :----- | :--------------------------- |
-| id         | string | 채널 아이디(unique)     |
-| project_id | string | 프로젝트 아이디              |
-| unique_id | string |  개발사에서 설정 가능한 채널 아이디 (unique) |
-| name       | string | 채널 이름                  |
-| user_id     | string | (채널 생성한) 유저 아이디    |
-| created_at | string | 생성 일자                    |
-| updated_at | string | 갱신 일자                    |
-
+| ID         | type   | desc                                        |
+| :--------- | :----- | :------------------------------------------ |
+| id         | string | 채널 아이디(unique)                         |
+| project_id | string | 프로젝트 아이디                             |
+| unique_id  | string | 개발사에서 설정 가능한 채널 아이디 (unique) |
+| name       | string | 채널 이름                                   |
+| user_id    | string | (채널 생성한) 유저 아이디                   |
+| created_at | string | 생성 일자                                   |
+| updated_at | string | 갱신 일자                                   |
 
 ### 2-2. getChannels
 
- - (프로젝트 내) Channel 데이터를 리스트 형태로 가져올 수 있습니다.
+- (프로젝트 내) Channel 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```csharp
 GameChat.getChannels(OFFSET, LIMIT, function(err, channels) {
 });
 ```
 
-| ID         | type   | desc                         |
-| :--------- | :----- | :--------------------------- |
-| OFFSET     | int    | (전체 채널 리스트로부터 가져올) 채널의 시작 위치 (index)    |
-| LIMIT      | int    | (가져올) 채널의 갯수           |
-
+| ID     | type | desc                                                     |
+| :----- | :--- | :------------------------------------------------------- |
+| OFFSET | int  | (전체 채널 리스트로부터 가져올) 채널의 시작 위치 (index) |
+| LIMIT  | int  | (가져올) 채널의 갯수                                     |
 
 ### 2-4. create / update / delete Channel
 
- - (프로젝트 내) 새로운 Channel Instance를 생성 / 갱신 / 삭제할 수 있습니다.
+- (프로젝트 내) 새로운 Channel Instance를 생성 / 갱신 / 삭제할 수 있습니다.
 
 > 보안상의 이슈로, SDK를 통한 채널의 CRUD 기능은 제거되었습니다.  
-Open API를 통해, Server to Server로  채널의 CRUD를 사용하실 수 있습니다.
+> Open API를 통해, Server to Server로 채널의 CRUD를 사용하실 수 있습니다.
 
 [ Guide => [ Open API - Channel Create / Update / Delete ]](https://docs.gamechat.kr/undefined/gamechat_api#api)
 
 ### 2-5. getMessages
 
- - (특정 채널에 대해) Message 데이터를 리스트 형태로 가져올 수 있습니다.
+- (특정 채널에 대해) Message 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```javascript
-gc.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, SORTID, function(err, messages) 
-{    
-});
+gc.getMessages(
+  CHANNEL_ID,
+  OFFSET,
+  LIMIT,
+  SEARCH,
+  QUERY,
+  SORT,
+  SORTID,
+  function (err, messages) {}
+);
 ```
 
-| ID         | type   | desc                        |
-| :--------- | :----- | :-------------------------- |
-| CHANNEL_ID | string | 채널 아이디                 |
-| OFFSET     | string | (전체 메시지 리스트로부터 가져올) 메세지의 시작 위치 |
-| LIMIT      | string | (가져올) 메세지의 갯수      |
-| SEARCH     | string |   (메시지 검색 시) 검색 기준 key (ex> content.text) 빈 문자열 전달 시, full scan |
-| QUERY      | string |  (메시지 검색 시) 검색 value. 완전 일치만 검색 가능. 빈 문자열 전달 시, full scan  |
-| SORT       | string |  메시지 리스트 정렬순서 (default : desc - 가장 최근순) (optional : asc) |
-| SORTID     | string | 해당 sort id 다음으로 메시지를 가져온다. ( 이전 목록 보기 )
+| ID         | type   | desc                                                                             |
+| :--------- | :----- | :------------------------------------------------------------------------------- |
+| CHANNEL_ID | string | 채널 아이디                                                                      |
+| OFFSET     | string | (전체 메시지 리스트로부터 가져올) 메세지의 시작 위치                             |
+| LIMIT      | string | (가져올) 메세지의 갯수                                                           |
+| SEARCH     | string | (메시지 검색 시) 검색 기준 key (ex> content.text) 빈 문자열 전달 시, full scan   |
+| QUERY      | string | (메시지 검색 시) 검색 value. 완전 일치만 검색 가능. 빈 문자열 전달 시, full scan |
+| SORT       | string | 메시지 리스트 정렬순서 (default : desc - 가장 최근순) (optional : asc)           |
+| SORTID     | string | 해당 sort id 다음으로 메시지를 가져온다. ( 이전 목록 보기 )                      |
 
 ### 3-3. translateMessage
 
- - (자동번역 기능이 활성화 되어 있을 경우) 임의의 텍스트를 (지정한 언어로) 번역할 수 있습니다.
+- (자동번역 기능이 활성화 되어 있을 경우) 임의의 텍스트를 (지정한 언어로) 번역할 수 있습니다.
 
-> 해당 기능은, NaverCloud PAPAGO NMT 상품을 함께 연동할 경우 사용 가능합니다. [[ NCP Papago NMT ]](https://www.ncloud.com/product/aiService/papagoNmt)
+> 해당 기능은, NaverCloud PAPAGO NMT 상품을 함께 연동할 경우 사용 가능합니다. [[NCP Papago NMT]](https://www.ncloud.com/product/aiService/papagoNmt)
 
- - (Received) Translation Data Class (per Unit)
+- (Received) Translation Data Class (per Unit)
 
 ```javascript
-const tr_message = gc.translateMessage(CHANNEL_ID, SORCE_LANG, TARTGET_LANG, MESSAGE);
+const tr_message = gc.translateMessage(
+  CHANNEL_ID,
+  SORCE_LANG,
+  TARTGET_LANG,
+  MESSAGE
+);
+```
