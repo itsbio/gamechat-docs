@@ -623,3 +623,52 @@ GameChat.setProfileUrl(MEMBER_ID, PROFILE, (Member member, GameChatException Exc
 | NICKNAME   | string | 유저 닉네임 |
 | PROFILE    | string | 프로필 이미지 url      |
 
+
+## GameChatExtension (Emoji, HyperLink)
+
+- 수신 메시지에 포함된, Emoji와 HyperLink 텍스트를 다루기 쉽게 도와주는 Helper Class 입니다.
+
+> TMP_GameChatTextUGUI는 Unity Built-In Asset 인 TextMeshPro를 확장한 클래스이기때문에
+사용하기 위해서는, 먼저 Package Manager를 이용해 TextMeshPro를 Install 해야 합니다.
+
+> TextMeshPro Asset의 경우, Unity 2018.2 이상의 버전부터 Built-In Asset으로 포함됩니다.
+
+> Emoji Sprite Sheet의 경우, Emoji version 13(Android)를 기준으로 기본 출력되며 Sprite Sheet를 변경하여 커스터마이징이 가능합니다.
+
+```csharp
+namespace GameChatUnity.Extension
+{
+    public class TMP_GameChatTextUGUI : TextMeshProUGUI
+    {
+        public bool isHyperLinked { get; set; }    // link 형태 주소를 hyperlink 처리 여부 (append html tag)
+        public string LinkTextColor { get; set; }  // hyperlink text color
+    }
+}
+```
+
+Case
+
+```csharp
+using GameChatUnity.Extension;
+
+TMP_GameChatTextUGUI message = msgObject.GetComponent<TMP_GameChatTextUGUI>();
+
+//hyperlink 인식 및 처리를 위해, text는 setMessage를 통해 넣어주세요.
+message.setMessage(MESSAGE_CONTENT);
+message.color = Color.green;
+message.isHyperLinked = true;
+
+...
+
+msgObject = Instantiate(msgObject) as GameObject;
+
+...
+
+// hyperlink에 대한 click event listener는, 직접 구현해주세요.
+
+//Handling with TMP_LinkInfo
+TMP_LinkInfo linkInfoArr = message.textInfo.linkInfo[LINK_INDEX];
+
+...
+
+```
