@@ -628,10 +628,12 @@ GameChat.setProfileUrl(MEMBER_ID, PROFILE, (Member member, GameChatException Exc
 
 - 수신 메시지에 포함된, Emoji와 HyperLink 텍스트를 다루기 쉽게 도와주는 Helper Class 입니다.
 
-> TMP_GameChatTextUGUI는 Unity Built-In Asset 인 TextMeshPro를 확장한 클래스이기때문에
-사용하기 위해서는, 먼저 Package Manager를 이용해 TextMeshPro를 Install 해야 합니다.
+-  TMP_GameChatTextUGUI는 Unity Built-In Asset 인 TextMeshPro를 확장한 클래스 입니다.
+사용하기 위해서는, 먼저 Package Manager를 이용해 TextMeshPro가 설치되었는지 확인해주세요.
 
-> TextMeshPro Asset의 경우, Unity 2018.2 이상의 버전부터 Built-In Asset으로 포함됩니다.
+> TextMeshPro Asset의 경우, Unity 2018.2 이상의 버전부터 Built-In Asset으로 포함됩니다. 
+ 
+> Unity 에디터 상에서, Window > TextMeshPro > Import TMP Essential Resources를 눌러, 기본 리소스까지 import 해 주세요.
 
 > Emoji Sprite Sheet의 경우, Emoji version 13(Android)를 기준으로 기본 출력되며 Sprite Sheet를 변경하여 커스터마이징이 가능합니다.
 
