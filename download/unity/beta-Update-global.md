@@ -1,4 +1,4 @@
-### Latest Version: v1.0.0
+### Latest Version: v1.1.0
 
 [Unity SDK Download](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatPlugin_v1.1.0_20210527.unitypackage)
 
