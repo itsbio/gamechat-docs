@@ -426,7 +426,7 @@ GameChat.getMessages(CHANNEL_ID, OFFSET, LIMIT, SEARCH, QUERY, SORT, (List<Messa
 
  - (자동번역 기능이 활성화 되어 있을 경우) 임의의 텍스트를 (지정한 언어로) 번역할 수 있습니다.
 
-> 해당 기능은, NaverCloud PAPAGO NMT 상품을 함께 연동할 경우 사용 가능합니다. [[ NCP Papago NMT ]](https://www.ncloud.com/product/aiService/papagoNmt)
+> 해당 기능은, NaverCloud PAPAGO NMT 상품을 함께 연동할 경우 사용 가능합니다. [[ NCP Papago NMT ]](https://www.ncloud.com/product/aiService/papagoTranslation)
 
 
  - (Received) Translation Data Class (per Unit)

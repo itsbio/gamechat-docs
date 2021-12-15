@@ -121,7 +121,7 @@ Papago를 활성화하면 채팅 번역 기능을 사용할 수 있습니다.
 
 네이버 클라우드와 연동을 위한 Papago 키값을 추가해야 합니다.
 
-[NAVER AI Application 사용 가이드](https://docs.ncloud.com/ko/naveropenapi_v3/application.html)를 참고하여 키값을 입력해 주세요.
+[NAVER AI Application 사용 가이드](https://api.ncloud-docs.com/docs/ai-naver-papagonmt)를 참고하여 키값을 입력해 주세요.
 
 #### - 사용자 설정
 
