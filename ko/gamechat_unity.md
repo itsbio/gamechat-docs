@@ -443,8 +443,8 @@ public class Translation
 
 | ID                | type    | desc                            |
 | :---------------- | :------ | :------------------------------ |
-| detectLang        | string  |   출발 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
-| lang                  | string  | 도착 언어 코드 [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/) |
+| detectLang        | string  |   출발 언어 코드 [[API Guide]](https://api.ncloud-docs.com/docs/ai-naver-papagonmt-translation) |
+| lang                  | string  | 도착 언어 코드 [[API Guide]](https://api.ncloud-docs.com/docs/ai-naver-papagonmt-translation) |
 | translated        | bool  | 번역 성공 여부            |
 | message           | string  | 결과 메세지 내용 (json string)          |
 
@@ -482,8 +482,8 @@ GameChat.translateMessage(SORCE_LANG, TARTGET_LANG, TEXT, (List<Translation> Tra
 | ID         | type   | desc                        |
 | :--------- | :----- | :-------------------------- |
 | CHANNEL_ID | string | 채널 아이디                 |
-| SORCE_LANG | string | (송신 할) 텍스트 언어명 (auto : 자동감지) [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)   |
-| TARTGET_LANG      | string | (번역 수신 할) 텍스트 언어 코드 ("," 구분하여 복수 입력 가능 - ex> "en, fr, th")   [[API Guide]](https://apidocs.ncloud.com/ko/ai-naver/papago_nmt/translation/)    |
+| SORCE_LANG | string | (송신 할) 텍스트 언어명 (auto : 자동감지) [[API Guide]](https://api.ncloud-docs.com/docs/ai-naver-papagonmt-translation)   |
+| TARTGET_LANG      | string | (번역 수신 할) 텍스트 언어 코드 ("," 구분하여 복수 입력 가능 - ex> "en, fr, th")   [[API Guide]](https://api.ncloud-docs.com/docs/ai-naver-papagonmt-translation)    |
 | TEXT     | string |     (송신 할) 텍스트                  |
 
 
