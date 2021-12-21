@@ -13,6 +13,10 @@ search:
 
 ```csharp
 GameChat.initialize(PROJECT_ID);
+
+// 싱가폴 리전 사용 시
+GameChat.setRegion("sg");
+GameChat.initialize(PROJECT_ID);
 ```
 
 | ID         | type   | desc            |
@@ -345,7 +349,7 @@ GameChat.getChannel(CHANNEL_UNIQUE_ID, (Channel Channel, GameChatException Excep
 
  - (프로젝트 내) 새로운 Channel Instance를 생성 / 갱신 / 삭제할 수 있습니다.
 
-> 보안상의 이슈로, SDK를 통한 채널의 CRUD 기능은 제거되었습니다.  
+> 보안상의 이슈로, SDK를 통한 채널의 CRUD 기능은 제거되었습니다.
 Open API를 통해, Server to Server로  채널의 CRUD를 사용하실 수 있습니다.
 
 [ Guide => [ Open API - Channel Create / Update / Delete ]](https://docs.gamechat.kr/undefined/gamechat_api#api)
@@ -573,8 +577,8 @@ GameChat.setProfileUrl(MEMBER_ID, PROFILE, (Member member, GameChatException Exc
 -  TMP_GameChatTextUGUI는 Unity Built-In Asset 인 TextMeshPro를 확장한 클래스 입니다.
 사용하기 위해서는, 먼저 Package Manager를 이용해 TextMeshPro가 설치되었는지 확인해주세요.
 
-> TextMeshPro Asset의 경우, Unity 2018.2 이상의 버전부터 Built-In Asset으로 포함됩니다. 
- 
+> TextMeshPro Asset의 경우, Unity 2018.2 이상의 버전부터 Built-In Asset으로 포함됩니다.
+
 > Unity 에디터 상에서, Window > TextMeshPro > Import TMP Essential Resources를 눌러, 기본 리소스까지 import 해 주세요.
 
 > Emoji Sprite Sheet의 경우, Emoji version 13(Android)를 기준으로 기본 출력되며 Sprite Sheet를 변경하여 커스터마이징이 가능합니다.

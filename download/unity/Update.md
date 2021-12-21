@@ -1,10 +1,14 @@
-### 최신버전 : v1.1.1
+### 최신버전 : v1.1.2
 
-[Unity SDK 다운로드](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatPlugin_v1.1.1_20210617.unitypackage)
+[Unity SDK 다운로드](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatUnitySDK_20211221.unitypackage)
 
 <br/>
 
 ### Change Log
+
+#### v1.1.2 (2021-12-21)
+
+- Region 관련 기능 추가
 
 #### v1.1.1 (2021-07-06)
 

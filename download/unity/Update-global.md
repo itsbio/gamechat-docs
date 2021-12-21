@@ -1,10 +1,14 @@
-### Latest Version: v1.1.1
+### Latest Version: v1.1.2
 
-[Unity SDK Download](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatPlugin_v1.1.1_20210617.unitypackage)
+[Unity SDK Download](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatUnitySDK_20211221.unitypackage)
 
 <br/>
 
 ### Change Log
+
+#### v1.1.2 (2021-12-21)
+
+- Added region related function
 
 #### v1.1.1 (2021-07-06)
 
