@@ -20,6 +20,9 @@ search:
 ```javascript
 var gc = new gamechat.Chat();
 gc.initialize(projectId);
+
+// 싱가폴 리전 사용 시
+gc.initialize(projectId, { region : 'sg' });
 ```
 
 ### 2. Connect to Game Chat Server
@@ -158,7 +161,7 @@ GameChat.getChannels(OFFSET, LIMIT, function(err, channels) {
 
 - (프로젝트 내) 새로운 Channel Instance를 생성 / 갱신 / 삭제할 수 있습니다.
 
-> 보안상의 이슈로, SDK를 통한 채널의 CRUD 기능은 제거되었습니다.  
+> 보안상의 이슈로, SDK를 통한 채널의 CRUD 기능은 제거되었습니다.
 > Open API를 통해, Server to Server로 채널의 CRUD를 사용하실 수 있습니다.
 
 [ Guide => [ Open API - Channel Create / Update / Delete ]](https://docs.gamechat.kr/undefined/gamechat_api#api)
