@@ -171,14 +171,7 @@ GameChat.getChannels(OFFSET, LIMIT, function(err, channels) {
 - (특정 채널에 대해) Message 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```javascript
-gc.getMessages(
-  CHANNEL_ID,
-  OFFSET,
-  LIMIT,
-  SEARCH,
-  QUERY,
-  SORT,
-  SORTID,
+gc.getMessages( {channelId:CHANNEL_ID, offset:OFFSET, limit:LIMIT, search:SEARCH, query:QUERY, sort:SORT, sortId:SORTID}
   function (err, messages) {}
 );
 ```
@@ -186,8 +179,8 @@ gc.getMessages(
 | ID         | type   | desc                                                                             |
 | :--------- | :----- | :------------------------------------------------------------------------------- |
 | CHANNEL_ID | string | 채널 아이디                                                                      |
-| OFFSET     | string | (전체 메시지 리스트로부터 가져올) 메세지의 시작 위치                             |
-| LIMIT      | string | (가져올) 메세지의 갯수                                                           |
+| OFFSET     | int | (전체 메시지 리스트로부터 가져올) 메세지의 시작 위치                             |
+| LIMIT      | int | (가져올) 메세지의 갯수                                                           |
 | SEARCH     | string | (메시지 검색 시) 검색 기준 key (ex> content.text) 빈 문자열 전달 시, full scan   |
 | QUERY      | string | (메시지 검색 시) 검색 value. 완전 일치만 검색 가능. 빈 문자열 전달 시, full scan |
 | SORT       | string | 메시지 리스트 정렬순서 (default : desc - 가장 최근순) (optional : asc)           |
