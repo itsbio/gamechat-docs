@@ -171,7 +171,7 @@ GameChat.getChannels(OFFSET, LIMIT, function(err, channels) {
 - (특정 채널에 대해) Message 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```javascript
-gc.getMessages( {channelId:CHANNEL_ID, offset:OFFSET, limit:LIMIT, search:SEARCH, query:QUERY, sort:SORT, sortId:SORTID}
+gc.getMessages( {channelId:CHANNEL_ID, offset:OFFSET, limit:LIMIT, search:SEARCH, query:QUERY, sort:SORT, sortId:SORTID},
   function (err, messages) {}
 );
 ```
