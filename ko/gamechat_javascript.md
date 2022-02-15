@@ -34,6 +34,7 @@ gc.setUser({
   id: 'userId',
   name: 'Nickname',
 });
+
 gc.connect(user_id, (err, res) => {
   if (err) console.log(err);
 });
@@ -116,6 +117,13 @@ gc.getSubscriptions(CHANNEL_ID, OFFSET, LIMIT, function(err, subscriptions)
 }));
 ```
 
+| ID         | type   | desc             |
+| :--------- | :----- | :--------------- |
+| CHANNEL_ID | string | 채널 아이디    |
+| OFFSET     | int    | Subscrtiption 데이터 시작 위치 (0: 첫번째)|
+| LIMIT      | int    | 가져올 Subscrtiption 데이터 갯수|
+
+
 ### 2-1. Channel
 
 - Channel Data Class (per Unit)
@@ -127,7 +135,6 @@ public class Channel
     public string project_id;
     public string unique_id;
     public string name;
-    public string user_id;
     public string created_at;
     public string updated_at;
 }
@@ -139,7 +146,6 @@ public class Channel
 | project_id | string | 프로젝트 아이디                             |
 | unique_id  | string | 개발사에서 설정 가능한 채널 아이디 (unique) |
 | name       | string | 채널 이름                                   |
-| user_id    | string | (채널 생성한) 유저 아이디                   |
 | created_at | string | 생성 일자                                   |
 | updated_at | string | 갱신 일자                                   |
 
@@ -148,7 +154,7 @@ public class Channel
 - (프로젝트 내) Channel 데이터를 리스트 형태로 가져올 수 있습니다.
 
 ```csharp
-GameChat.getChannels(OFFSET, LIMIT, function(err, channels) {
+gc.getChannels(OFFSET, LIMIT, function(err, channels) {
 });
 ```
 
