@@ -1,10 +1,14 @@
-### Latest Version: v1.1.2
+### Latest Version: v1.1.3
 
-[Unity SDK Download](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatUnitySDK_20211221.unitypackage)
+[Unity SDK Download](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GAMECHAT_UNITY_SDK_20220217.unitypackage)
 
 <br/>
 
 ### Change Log
+
+#### v1.1.3 (2022-02-17)
+
+- Improved stability and added exception handling
 
 #### v1.1.2 (2021-12-21)
 
