@@ -1,6 +1,6 @@
 ### Latest Version: v1.1.3
 
-[Unity SDK Download](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GameChatUnitySDK_20211221.unitypackage)
+[Unity SDK Download](https://xyuditqzezxs1008973.cdn.ntruss.com/GameChatSDK/GAMECHAT_UNITY_SDK_20220217.unitypackage)
 
 
 <br/>
